@@ -123,7 +123,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Console.cpp" />
+    <ClCompile Include="ErreurArgumentInvalide.cpp" />
+    <ClCompile Include="ErreurStockInsuffisant.cpp" />
+    <ClCompile Include="JeuVideo.cpp" />
     <ClCompile Include="TP_C++_JeuVideo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Console.hpp" />
+    <ClInclude Include="ErreurArgumentInvalide.hpp" />
+    <ClInclude Include="ErreurStockInsuffisant.hpp" />
+    <ClInclude Include="JeuVideo.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
