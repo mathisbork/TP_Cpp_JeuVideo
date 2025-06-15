@@ -1,0 +1,18 @@
+# Fichiers et dossiers temporaires Visual Studio
+.vs/
+*.user
+*.suo
+*.VC.db
+*.vscode/
+*.ipch/
+*.obj
+*.log
+*.opensdf
+*.sdf
+*.tlog
+Debug/
+Release/
+x64/
+*.exe
+*.pdb
+*.ilk
