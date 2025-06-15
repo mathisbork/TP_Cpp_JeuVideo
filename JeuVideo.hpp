@@ -6,10 +6,10 @@
 
 class JeuVideo {
 private:
-    std::string m_titre;
-    std::string m_genre;
-    double m_prix;
-    int m_stock;
+    std::string titre;
+    std::string genre;
+    double prix;
+    int stock;
 
 public:
     // Constructeur

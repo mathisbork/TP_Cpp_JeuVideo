@@ -6,9 +6,9 @@
 
 class Console {
 private:
-    std::string m_nomConsole;
-    double m_prix;
-    int m_stock;
+    std::string nomConsole;
+    double prix;
+    int stock;
 
 public:
     // Constructeur

@@ -6,9 +6,9 @@
 
 class ErreurStockInsuffisant : public std::runtime_error {
 private:
-    std::string m_titreProduit;
-    int m_quantiteDemandee;
-    int m_quantiteDisponible;
+    std::string titreProduit;
+    int quantiteDemandee;
+    int quantiteDisponible;
 
 public:
     ErreurStockInsuffisant(const std::string& titre, int demandee, int disponible);
