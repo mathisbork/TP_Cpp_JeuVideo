@@ -1,32 +1,23 @@
-#ifndef JEU_VIDEO_HPP
-#define JEU_VIDEO_HPP
+#ifndef JEUVIDEO_HPP
+#define JEUVIDEO_HPP
 
-#include <string>
+#include "Produit.hpp"
 #include "ErreurArgumentInvalide.hpp"
 
-class JeuVideo {
+#include <string>
+
+class JeuVideo : public Produit {
 private:
-    std::string titre;
-    std::string genre;
-    double prix;
-    int stock;
+    std::string m_genre;
+    int m_stock;
 
 public:
-    // Constructeur
-    JeuVideo(const std::string& titre, const std::string& genre, double prix, int stock);
+    JeuVideo(const std::string& titre, const std::string& genre, double prixBase, int stock);
 
-    // Accesseurs
-    std::string getTitre() const;
-    std::string getGenre() const;
-    double getPrix() const;
-    int getStock() const;
-
-    // Mutateurs
-    void setPrix(double nouveauPrix);
-    void setStock(int nouveauStock);
-
-    // Méthode d'affichage
-    void afficherInfos() const;
+    double calculerPrixTTC() const override;
+    void afficherDetailsProduit() const override;
+    void setStock(int nouveauStock) override;
+    int getStock() const override;
 };
 
 #endif

@@ -1,49 +1,31 @@
 #include "JeuVideo.hpp"
 #include <iostream>
+#include <iomanip>
 
-// Constructeur
-JeuVideo::JeuVideo(const std::string& titre, const std::string& genre, double prix, int stock)
-    : titre(titre), genre(genre) {
-    setPrix(prix);
-    setStock(stock);
+JeuVideo::JeuVideo(const std::string& titre, const std::string& genre, double prixBase, int stock)
+    : Produit(titre, prixBase), m_genre(genre) {
+    setStock(stock); // validation ici
 }
 
-// Accesseurs
-std::string JeuVideo::getTitre() const {
-    return titre;
+double JeuVideo::calculerPrixTTC() const {
+    return m_prixBase * 1.20; // TVA de 20%
 }
 
-std::string JeuVideo::getGenre() const {
-    return genre;
-}
-
-double JeuVideo::getPrix() const {
-    return prix;
-}
-
-int JeuVideo::getStock() const {
-    return stock;
-}
-
-// Mutateurs
-void JeuVideo::setPrix(double nouveauPrix) {
-    if (nouveauPrix < 0) {
-        throw ErreurArgumentInvalide("Le prix ne peut pas être négatif.");
-    }
-    prix = nouveauPrix;
+void JeuVideo::afficherDetailsProduit() const {
+    std::cout << "Titre : " << m_nomProduit << std::endl;
+    std::cout << "Genre : " << m_genre << std::endl;
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "Prix TTC : " << calculerPrixTTC() << std::endl;
+    std::cout << "Stock : " << m_stock << " exemplaire(s)" << std::endl;
 }
 
 void JeuVideo::setStock(int nouveauStock) {
     if (nouveauStock < 0) {
-        throw ErreurArgumentInvalide("Le stock ne peut pas être négatif.");
+        throw ErreurArgumentInvalide("Le stock du jeu ne peut pas etre negatif.");
     }
-    stock = nouveauStock;
+    m_stock = nouveauStock;
 }
 
-// Affichage
-void JeuVideo::afficherInfos() const {
-    std::cout << "Titre : " << titre << std::endl;
-    std::cout << "Genre : " << genre << std::endl;
-    std::cout << "Prix  : " << prix << " €" << std::endl;
-    std::cout << "Stock : " << stock << " exemplaire(s)" << std::endl;
+int JeuVideo::getStock() const {
+    return m_stock;
 }

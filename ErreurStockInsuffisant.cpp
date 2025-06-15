@@ -2,21 +2,21 @@
 
 ErreurStockInsuffisant::ErreurStockInsuffisant(const std::string& titre, int demandee, int disponible)
     : std::runtime_error("Erreur : Stock insuffisant pour le produit \"" + titre +
-        "\". Demandée : " + std::to_string(demandee) +
+        "\". Demandee : " + std::to_string(demandee) +
         ", Disponible : " + std::to_string(disponible)),
-    titreProduit(titre),
-    quantiteDemandee(demandee),
-    quantiteDisponible(disponible) {
+    m_titreProduit(titre),
+    m_quantiteDemandee(demandee),
+    m_quantiteDisponible(disponible) {
 }
 
 std::string ErreurStockInsuffisant::getTitreProduit() const {
-    return titreProduit;
+    return m_titreProduit;
 }
 
 int ErreurStockInsuffisant::getQuantiteDemandee() const {
-    return quantiteDemandee;
+    return m_quantiteDemandee;
 }
 
 int ErreurStockInsuffisant::getQuantiteDisponible() const {
-    return quantiteDisponible;
+    return m_quantiteDisponible;
 }

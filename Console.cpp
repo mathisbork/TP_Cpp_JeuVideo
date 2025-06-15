@@ -1,44 +1,30 @@
 #include "Console.hpp"
 #include <iostream>
+#include <iomanip>
 
-// Constructeur
-Console::Console(const std::string& nomConsole, double prix, int stock)
-    : nomConsole(nomConsole) {
-    setPrix(prix);   // Utilisation des mutateurs pour validation
-    setStock(stock);
+Console::Console(const std::string& nom, double prixBase, int stock)
+    : Produit(nom, prixBase) {
+    setStock(stock); // vérification via mutateur
 }
 
-// Accesseurs
-std::string Console::getNomConsole() const {
-    return nomConsole;
+double Console::calculerPrixTTC() const {
+    return m_prixBase * 1.20; // TVA 20%, même logique que JeuVideo
 }
 
-double Console::getPrix() const {
-    return prix;
-}
-
-int Console::getStock() const {
-    return stock;
-}
-
-// Mutateurs
-void Console::setPrix(double nouveauPrix) {
-    if (nouveauPrix < 0) {
-        throw ErreurArgumentInvalide("Le prix de la console ne peut pas être négatif.");
-    }
-    prix = nouveauPrix;
+void Console::afficherDetailsProduit() const {
+    std::cout << "Console : " << m_nomProduit << std::endl;
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "Prix TTC : " << calculerPrixTTC() << std::endl;
+    std::cout << "Stock : " << m_stock << " exemplaire(s)" << std::endl;
 }
 
 void Console::setStock(int nouveauStock) {
     if (nouveauStock < 0) {
-        throw ErreurArgumentInvalide("Le stock de la console ne peut pas être négatif.");
+        throw ErreurArgumentInvalide("Le stock de la console ne peut pas etre negatif.");
     }
-    stock = nouveauStock;
+    m_stock = nouveauStock;
 }
 
-// Méthode d'affichage
-void Console::afficherInfos() const {
-    std::cout << "Console : " << nomConsole << std::endl;
-    std::cout << "Prix    : " << prix << " €" << std::endl;
-    std::cout << "Stock   : " << stock << " exemplaire(s)" << std::endl;
+int Console::getStock() const {
+    return m_stock;
 }

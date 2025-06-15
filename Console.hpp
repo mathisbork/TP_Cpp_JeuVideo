@@ -1,30 +1,21 @@
 #ifndef CONSOLE_HPP
 #define CONSOLE_HPP
 
-#include <string>
+#include "Produit.hpp"
 #include "ErreurArgumentInvalide.hpp"
+#include <string>
 
-class Console {
+class Console : public Produit {
 private:
-    std::string nomConsole;
-    double prix;
-    int stock;
+    int m_stock;
 
 public:
-    // Constructeur
-    Console(const std::string& nomConsole, double prix, int stock);
+    Console(const std::string& nom, double prixBase, int stock);
 
-    // Accesseurs
-    std::string getNomConsole() const;
-    double getPrix() const;
-    int getStock() const;
-
-    // Mutateurs
-    void setPrix(double nouveauPrix);
-    void setStock(int nouveauStock);
-
-    // Méthode publique
-    void afficherInfos() const;
+    double calculerPrixTTC() const override;
+    void afficherDetailsProduit() const override;
+    void setStock(int nouveauStock) override;
+    int getStock() const override;
 };
 
 #endif

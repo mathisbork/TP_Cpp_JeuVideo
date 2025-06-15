@@ -1,28 +1,47 @@
 #include <iostream>
+#include <vector>
+#include <memory>
+
+#include "JeuVideo.hpp"
+#include "Console.hpp"
 #include "ErreurArgumentInvalide.hpp"
 #include "ErreurStockInsuffisant.hpp"
+#include "Produit.hpp"
 
 int main() {
-    std::cout << "=== Test des exceptions personnalisées ===\n" << std::endl;
+    std::vector<Produit*> produits;
 
-    //Test 1 : Argument invalide (prix négatif)
     try {
-        throw ErreurArgumentInvalide("Le prix d'un produit ne peut pas être négatif.");
+        // Creation d'un jeu video
+        Produit* jeu = new JeuVideo("Elden Ring", "RPG", 59.99, 10);
+        produits.push_back(jeu);
+
+        // Creation d'une console
+        Produit* console = new Console("PlayStation 5", 499.99, 5);
+        produits.push_back(console);
+
+        // Affichage de tous les produits (via operator<<)
+        std::cout << "=== Liste des produits ===" << std::endl;
+        for (Produit* p : produits) {
+            std::cout << *p << std::endl;
+            std::cout << "---------------------------" << std::endl;
+        }
+
+        // Test d'une erreur de stock negatif
+        std::cout << "\n=== Test erreur de stock ===" << std::endl;
+        console->setStock(-3);
+
     }
     catch (const ErreurArgumentInvalide& e) {
-        std::cerr << "[Exception attrapée - Argument invalide] : " << e.what() << std::endl;
+        std::cerr << "[ErreurArgumentInvalide] : " << e.what() << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cerr << "[Autre exception] : " << e.what() << std::endl;
     }
 
-    std::cout << "\n-----------------------------------\n" << std::endl;
+    for (Produit* p : produits) {
+        delete p;
+    }
 
-    //Test 2 :stock insuffisant
-    try {
-        throw ErreurStockInsuffisant("JustCause3", 7, 3);
-    }
-    catch (const ErreurStockInsuffisant& e) {
-        std::cerr << "[Exception attrapée - Stock insuffisant] : " << e.what() << std::endl;
-        std::cerr << "Produit concerné : " << e.getTitreProduit() << std::endl;
-        std::cerr << "Demandé : " << e.getQuantiteDemandee() << " | Disponible : " << e.getQuantiteDisponible() << std::endl;
-    }
     return 0;
 }
