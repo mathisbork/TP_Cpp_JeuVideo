@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Boutique.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="ErreurArgumentInvalide.cpp" />
     <ClCompile Include="ErreurStockInsuffisant.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="TP_C++_JeuVideo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boutique.hpp" />
     <ClInclude Include="Console.hpp" />
     <ClInclude Include="ErreurArgumentInvalide.hpp" />
     <ClInclude Include="ErreurStockInsuffisant.hpp" />

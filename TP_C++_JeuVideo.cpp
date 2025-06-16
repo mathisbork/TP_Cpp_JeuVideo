@@ -1,47 +1,99 @@
 #include <iostream>
-#include <vector>
-#include <memory>
-
-#include "JeuVideo.hpp"
-#include "Console.hpp"
+#include "Boutique.hpp"
 #include "ErreurArgumentInvalide.hpp"
 #include "ErreurStockInsuffisant.hpp"
-#include "Produit.hpp"
 
 int main() {
-    std::vector<Produit*> produits;
+    Boutique boutique;
 
+    std::cout << "=== TEST BOUTIQUE ===\n" << std::endl;
+
+    // Test de creation avec arguments invalides
     try {
-        // Creation d'un jeu video
-        Produit* jeu = new JeuVideo("Elden Ring", "RPG", 59.99, 10);
-        produits.push_back(jeu);
-
-        // Creation d'une console
-        Produit* console = new Console("PlayStation 5", 499.99, 5);
-        produits.push_back(console);
-
-        // Affichage de tous les produits (via operator<<)
-        std::cout << "=== Liste des produits ===" << std::endl;
-        for (Produit* p : produits) {
-            std::cout << *p << std::endl;
-            std::cout << "---------------------------" << std::endl;
-        }
-
-        // Test d'une erreur de stock negatif
-        std::cout << "\n=== Test erreur de stock ===" << std::endl;
-        console->setStock(-3);
-
+        JeuVideo jeuInvalide("Bug Game", "FPS", -10.0, -3);
     }
     catch (const ErreurArgumentInvalide& e) {
-        std::cerr << "[ErreurArgumentInvalide] : " << e.what() << std::endl;
-    }
-    catch (const std::exception& e) {
-        std::cerr << "[Autre exception] : " << e.what() << std::endl;
+        std::cerr << "[Exception - creation invalide] : " << e.what() << std::endl;
     }
 
-    for (Produit* p : produits) {
-        delete p;
+    try {
+        Console consoleInvalide("ConsoleX", -200.0, -5);
     }
+    catch (const ErreurArgumentInvalide& e) {
+        std::cerr << "[Exception - creation invalide] : " << e.what() << std::endl;
+    }
+
+    // Ajout de produits valides
+    JeuVideo jeu1("Zelda", "Aventure", 49.99, 5);
+    JeuVideo jeu2("Mario Kart", "Course", 59.99, 8);
+    Console console1("Switch", 299.99, 3);
+    Console console2("Xbox Series X", 499.99, 2);
+
+    boutique.ajouterJeu(jeu1);
+    boutique.ajouterJeu(jeu2);
+    boutique.ajouterConsole(console1);
+    boutique.ajouterConsole(console2);
+
+    // Affichage initial
+    std::cout << "\n--- Inventaire initial ---" << std::endl;
+    boutique.afficherInventaireComplet();
+
+    // Test des mutateurs invalides
+    try {
+        jeu1.setStock(-1);
+    }
+    catch (const ErreurArgumentInvalide& e) {
+        std::cerr << "[Exception - setStock] : " << e.what() << std::endl;
+    }
+
+    try {
+        console1.setStock(-10);
+    }
+    catch (const ErreurArgumentInvalide& e) {
+        std::cerr << "[Exception - setStock] : " << e.what() << std::endl;
+    }
+
+    // Ventes valides
+    try {
+        boutique.vendreJeu("Zelda", 2);
+        boutique.vendreConsole("Switch", 1);
+    }
+    catch (const std::exception& e) {
+        std::cerr << "[Exception inattendue] : " << e.what() << std::endl;
+    }
+
+    // Ventes invalides
+    try {
+        boutique.vendreJeu("Mario Kart", 100); // Trop de quantite
+    }
+    catch (const ErreurStockInsuffisant& e) {
+        std::cerr << "[ErreurStockInsuffisant] : " << e.what() << std::endl;
+        std::cerr << "Produit : " << e.getTitreProduit()
+            << " | Demande : " << e.getQuantiteDemandee() << std::endl;
+    }
+
+    try {
+        boutique.vendreConsole("PS5", 1); // Produit inexistant
+    }
+    catch (const std::exception& e) {
+        std::cerr << "[Exception - produit introuvable] : " << e.what() << std::endl;
+    }
+
+    // Affichage final
+    std::cout << "\n--- Inventaire apres ventes ---" << std::endl;
+    boutique.afficherInventaireComplet();
+
+    // Affichage total produits vendus
+    std::cout << "\nTotal de produits vendus : "
+        << Boutique::getTotalProduitsVendus() << std::endl;
+
+    // Accesseurs et mutateurs sur objets
+    std::cout << "\n--- Accesseurs / Mutateurs manuels ---" << std::endl;
+    std::cout << "Nom console 1 : " << console1.getNomProduit() << std::endl;
+    std::cout << "Stock console 1 : " << console1.getStock() << std::endl;
+
+    console1.setStock(10);
+    std::cout << "Stock console 1 apres modif : " << console1.getStock() << std::endl;
 
     return 0;
 }
